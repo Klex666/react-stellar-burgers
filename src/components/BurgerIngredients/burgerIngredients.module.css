@@ -1,0 +1,11 @@
+
+.ingredientsSection {
+    width: 610px;
+    height: 640px; 
+    overflow: auto;
+}
+
+.cardSection {
+    display: flex;
+    flex-wrap: wrap;
+}

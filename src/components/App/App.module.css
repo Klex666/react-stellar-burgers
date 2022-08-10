@@ -1,0 +1,9 @@
+.container {
+    margin: 0 auto;
+    width: 1320px;
+    height: 100%;
+}
+
+main {
+    display: flex;
+}

@@ -1,0 +1,23 @@
+.card {
+    width: 272px;
+    height: 208px;
+    text-align: center;
+    margin: 24px 24px 40px 0px;
+    white-space: pre-wrap;
+}
+
+.cost {
+    display: flex;
+    justify-content: center;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.costIcon {
+    margin-left: 9px
+}
+
+
+.ingredientsCard {
+    position: relative;
+}
