@@ -1,7 +1,7 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import React, { useState } from 'react';
 import IngredientsCard from '../IngredientsCard/IngredientsCard';
-import data from '../utils/data';
+import data from '../../utils/data';
 
 import burgerIngredientsStyle from './BurgerIngredients.module.css';
 
