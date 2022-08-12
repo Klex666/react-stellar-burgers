@@ -1,9 +1,9 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import IngredientsCard from '../IngredientsCard/IngredientsCard';
 import data from '../../utils/data';
 
-import burgerIngredientsStyle from './BurgerIngredients.module.css';
+import styles from './BurgerIngredients.module.css';
 
 const BurgerIngredients = () => {
   const [current, setCurrent] = useState('Булки');
@@ -23,9 +23,9 @@ const BurgerIngredients = () => {
         </Tab>
       </div>
       <div className="mt-10">
-        <div className={burgerIngredientsStyle.ingredientsSection}>
+        <div className={styles.ingredientsSection}>
           <p className="text text_type_main-medium">Булки</p>
-          <div className={burgerIngredientsStyle.cardSection}>
+          <div className={styles.cardSection}>
             {data.map((obj, id) => {
               if (obj.type === 'bun') {
                 return <IngredientsCard key={id} image={obj.image} name={obj.name} cost={20} />;
@@ -34,7 +34,7 @@ const BurgerIngredients = () => {
             })}
           </div>
           <p className="text text_type_main-medium mt-10">Соусы</p>
-          <div className={burgerIngredientsStyle.cardSection}>
+          <div className={styles.cardSection}>
             {data.map((obj, id) => {
               if (obj.type === 'sauce') {
                 return <IngredientsCard key={id} image={obj.image} name={obj.name} cost={30} />;
@@ -43,7 +43,7 @@ const BurgerIngredients = () => {
             })}
           </div>
           <p className="text text_type_main-medium mt-10">Начинки</p>
-          <div className={burgerIngredientsStyle.cardSection}>
+          <div className={styles.cardSection}>
             {data.map((obj, id) => {
               if (obj.type === 'main') {
                 return <IngredientsCard key={id} image={obj.image} name={obj.name} cost={40} />;

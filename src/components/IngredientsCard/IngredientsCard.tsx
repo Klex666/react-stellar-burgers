@@ -1,7 +1,7 @@
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import React from 'react';
 
-import IngredientsCardStyles from './IngredientsCard.module.css';
+import styles from './IngredientsCard.module.css';
 
 interface ICard {
   image: string;
@@ -11,13 +11,13 @@ interface ICard {
 
 const IngredientsCard: React.FC<ICard> = ({ image, name, cost }) => {
   return (
-    <div className={IngredientsCardStyles.ingredientsCard}>
-      <article className={IngredientsCardStyles.card}>
+    <div className={styles.ingredientsCard}>
+      <article className={styles.card}>
         <Counter count={1} size="default" />
         <img src={image} alt="" />
-        <div className={IngredientsCardStyles.cost}>
+        <div className={styles.cost}>
           <p className="text text_type_main-default">{cost}</p>
-          <div className={IngredientsCardStyles.costIcon}>
+          <div className={styles.costIcon}>
             <CurrencyIcon type="primary" />
           </div>
         </div>

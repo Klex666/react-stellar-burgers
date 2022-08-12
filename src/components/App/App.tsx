@@ -1,6 +1,4 @@
-import React from 'react';
-
-import appStyle from './App.module.css';
+import styles from './App.module.css';
 
 import AppHeader from '../AppHeader/AppHeader';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
@@ -10,7 +8,7 @@ function App() {
   return (
     <div className="App">
       <AppHeader />
-      <div className={appStyle.container}>
+      <div className={styles.container}>
         <main>
           <BurgerIngredients />
           <BurgerConstructor />

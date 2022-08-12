@@ -4,15 +4,14 @@ import {
   CurrencyIcon,
   DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import React from 'react';
 
 import data from '../../utils/data';
 
-import BurgerConstructorStyle from './BurgerConstructor.module.css';
+import styles from './BurgerConstructor.module.css';
 
 const BurgerConstructor = () => {
   return (
-    <section className={BurgerConstructorStyle.burgerConstructor}>
+    <section className={styles.burgerConstructor}>
       <div className="ml-8">
         <ConstructorElement
           type="top"
@@ -22,11 +21,11 @@ const BurgerConstructor = () => {
           thumbnail={'https://code.s3.yandex.net/react/code/bun-02.png'}
         />
       </div>
-      <div className={BurgerConstructorStyle.cardSection}>
+      <div className={styles.cardSection}>
         {data.map((obj, id) => {
-          if (obj.name !== 'Краторная булка N-200i') {
+          if (obj.type !== 'top' && 'bottom') {
             return (
-              <div className={BurgerConstructorStyle.card} key={id}>
+              <div className={styles.card} key={id}>
                 <div className="mr-2 mt-8">
                   <DragIcon type="primary" />
                 </div>
@@ -45,14 +44,14 @@ const BurgerConstructor = () => {
       </div>
       <div className="ml-8 mt-4">
         <ConstructorElement
-          type="top"
+          type="bottom"
           isLocked={true}
           text="Краторная булка N-200i (низ)"
           price={200}
           thumbnail={'https://code.s3.yandex.net/react/code/bun-02.png'}
         />
       </div>
-      <div className={BurgerConstructorStyle.orderSubmit}>
+      <div className={styles.orderSubmit}>
         <p className="text text_type_digits-medium">610</p>
         <div className="ml-2">
           <CurrencyIcon type="primary" />
