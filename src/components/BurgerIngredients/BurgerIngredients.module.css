@@ -5,6 +5,11 @@
     overflow: auto;
 }
 
+.tabs {
+    margin-top: 5px;
+    display: flex;
+}
+
 .cardSection {
     display: flex;
     flex-wrap: wrap;

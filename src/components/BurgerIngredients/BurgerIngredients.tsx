@@ -11,7 +11,7 @@ const BurgerIngredients = () => {
   return (
     <section className="mt-10">
       <p className="text text_type_main-large">Соберите бургер</p>
-      <div style={{ display: 'flex' }} className="mt-5">
+      <div className={styles.tabs}>
         <Tab value="Булки" active={current === 'Булки'} onClick={setCurrent}>
           Булки
         </Tab>
@@ -26,27 +26,33 @@ const BurgerIngredients = () => {
         <div className={styles.ingredientsSection}>
           <p className="text text_type_main-medium">Булки</p>
           <div className={styles.cardSection}>
-            {data.map((obj, id) => {
+            {data.map((obj) => {
               if (obj.type === 'bun') {
-                return <IngredientsCard key={id} image={obj.image} name={obj.name} cost={20} />;
+                return (
+                  <IngredientsCard key={obj._id} image={obj.image} name={obj.name} cost={20} />
+                );
               }
               return null;
             })}
           </div>
           <p className="text text_type_main-medium mt-10">Соусы</p>
           <div className={styles.cardSection}>
-            {data.map((obj, id) => {
+            {data.map((obj) => {
               if (obj.type === 'sauce') {
-                return <IngredientsCard key={id} image={obj.image} name={obj.name} cost={30} />;
+                return (
+                  <IngredientsCard key={obj._id} image={obj.image} name={obj.name} cost={30} />
+                );
               }
               return null;
             })}
           </div>
           <p className="text text_type_main-medium mt-10">Начинки</p>
           <div className={styles.cardSection}>
-            {data.map((obj, id) => {
+            {data.map((obj) => {
               if (obj.type === 'main') {
-                return <IngredientsCard key={id} image={obj.image} name={obj.name} cost={40} />;
+                return (
+                  <IngredientsCard key={obj._id} image={obj.image} name={obj.name} cost={40} />
+                );
               }
               return null;
             })}

@@ -23,7 +23,7 @@ const BurgerConstructor = () => {
       </div>
       <div className={styles.cardSection}>
         {data.map((obj, id) => {
-          if (obj.type !== 'top' && 'bottom') {
+          if (obj.name !== 'Краторная булка N-200i' && obj.name !== 'Флюоресцентная булка R2-D3') {
             return (
               <div className={styles.card} key={id}>
                 <div className="mr-2 mt-8">
