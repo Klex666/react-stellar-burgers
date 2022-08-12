@@ -9,7 +9,7 @@ const IngredientsCard: React.FC<ICard> = ({ image, name, cost }) => {
     <div className={styles.ingredientsCard}>
       <article className={styles.card}>
         <Counter count={1} size="default" />
-        <img src={image} alt="Ingredient" />
+        <img src={image} alt={name} />
         <div className={styles.cost}>
           <p className="text text_type_main-default">{cost}</p>
           <div className={styles.costIcon}>
