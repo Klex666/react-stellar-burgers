@@ -1,0 +1,25 @@
+.burgerConstructor { 
+    margin-top: 100px;
+    margin-left: 40px;
+    height: 912px
+}
+
+
+.cardSection {
+    width: 600px;
+    height: 570px;
+    overflow: auto;
+}
+
+
+.card {
+    display: flex;
+    margin-top: 16px;
+}
+
+.orderSubmit {
+    display: flex;
+    margin-top: 40px;
+    justify-content: flex-end;
+    align-items: center;
+}
