@@ -4,12 +4,16 @@ import {
   CurrencyIcon,
   DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-
-import data from '../../utils/data';
+import { IBurgerIngredients } from '../../utils/types';
 
 import styles from './BurgerConstructor.module.css';
+import OrderDetails from './OrderDetails/OrderDetails';
+import Modal from '../Modal/Modal';
+import { useState } from 'react';
 
-const BurgerConstructor = () => {
+const BurgerConstructor: React.FC<IBurgerIngredients> = ({ data }) => {
+  const [isOpened, setIsOpened] = useState(false);
+
   return (
     <section className={styles.burgerConstructor}>
       <div className="ml-8">
@@ -57,11 +61,16 @@ const BurgerConstructor = () => {
           <CurrencyIcon type="primary" />
         </div>
         <div className="ml-10">
-          <Button type="primary" size="medium">
+          <Button type="primary" size="medium" onClick={() => setIsOpened(true)}>
             Оформить заказ
           </Button>
         </div>
       </div>
+      {isOpened ? (
+        <Modal setIsOpened={setIsOpened} isOpened={isOpened} title={''}>
+          <OrderDetails />
+        </Modal>
+      ) : null}
     </section>
   );
 };

@@ -4,10 +4,10 @@ import React from 'react';
 import styles from './IngredientsCard.module.css';
 import { ICard } from '../../utils/types';
 
-const IngredientsCard: React.FC<ICard> = ({ image, name, cost }) => {
+const IngredientsCard: React.FC<ICard> = ({ image, name, cost, onOpen }) => {
   return (
     <div className={styles.ingredientsCard}>
-      <article className={styles.card}>
+      <article className={styles.card} onClick={onOpen}>
         <Counter count={1} size="default" />
         <img src={image} alt={name} />
         <div className={styles.cost}>
