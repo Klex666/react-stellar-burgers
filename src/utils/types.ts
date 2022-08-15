@@ -23,13 +23,13 @@ export interface IBurgerIngredients {
 }
 
 export interface IModal {
-  setIsOpened: Function;
+  closePopup: Function;
   isOpened: boolean;
   title: string;
 }
 
 export interface IModalOverlay {
-  handleClose: Function;
+  closePopup: Function;
 }
 
 export interface IIngredientDetails {

@@ -14,7 +14,7 @@ function App() {
       fetch(apiUrl)
         .then((res) => {
           if (!res.ok) {
-            console.log(`error ${res.statusText}`);
+            return Promise.reject(`Ошибка ${res.status}`);
           }
           return res.json();
         })

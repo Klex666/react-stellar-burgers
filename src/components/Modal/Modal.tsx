@@ -6,38 +6,38 @@ import ModalOverlay from '../ModalOverlay/ModalOverlay';
 
 import styles from './Modal.module.css';
 
-const Modal: React.FC<IModal> = ({ children, setIsOpened, isOpened, title }) => {
-  const handleClose = useCallback(
+const Modal: React.FC<IModal> = ({ children, closePopup, isOpened, title }) => {
+  const handleEscape = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        setIsOpened(false);
+        closePopup();
       }
     },
-    [setIsOpened],
+    [closePopup],
   );
 
   useEffect(() => {
     if (isOpened) {
-      document.addEventListener('keydown', handleClose, false);
+      document.addEventListener('keydown', handleEscape, false);
     }
 
     return () => {
-      document.removeEventListener('keydown', handleClose, false);
+      document.removeEventListener('keydown', handleEscape, false);
     };
-  }, [handleClose, isOpened]);
+  }, [handleEscape, isOpened]);
 
   return createPortal(
     <>
       <article className={isOpened ? styles.active_modal : styles.modal}>
         <div className={styles.modalHeader}>
           <p className="text text_type_main-large">{title}</p>
-          <div className={styles.closeIcon} onClick={() => setIsOpened(false)}>
+          <div className={styles.closeIcon} onClick={() => closePopup()}>
             <CloseIcon type="primary" />
           </div>
         </div>
         <div className={styles.modalBody}>{children}</div>
       </article>
-      <ModalOverlay handleClose={handleClose} />
+      <ModalOverlay closePopup={closePopup} />
     </>,
     document.getElementById('modal-root')!,
   );
