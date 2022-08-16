@@ -23,7 +23,7 @@ export interface IBurgerIngredients {
 }
 
 export interface IModal {
-  closePopup: Function;
+  setIsOpened: Function;
   isOpened: boolean;
   title: string;
 }

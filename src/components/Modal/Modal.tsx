@@ -6,7 +6,11 @@ import ModalOverlay from '../ModalOverlay/ModalOverlay';
 
 import styles from './Modal.module.css';
 
-const Modal: React.FC<IModal> = ({ children, closePopup, isOpened, title }) => {
+const Modal: React.FC<IModal> = ({ children, setIsOpened, isOpened, title }) => {
+  const closePopup = useCallback(() => {
+    setIsOpened(false);
+  }, [setIsOpened]);
+
   const handleEscape = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === 'Escape') {

@@ -17,10 +17,6 @@ const BurgerIngredients: React.FC<IBurgerIngredients> = ({ data }) => {
     setSelectedItem(obj);
   };
 
-  const closePopup = () => {
-    setIsOpened(false);
-  };
-
   return (
     <section className="mt-10">
       <p className="text text_type_main-large">Соберите бургер</p>
@@ -73,7 +69,7 @@ const BurgerIngredients: React.FC<IBurgerIngredients> = ({ data }) => {
         </div>
       </div>
       {isOpened ? (
-        <Modal isOpened={isOpened} closePopup={closePopup} title={'Детали ингредиента'}>
+        <Modal isOpened={isOpened} setIsOpened={setIsOpened} title={'Детали ингредиента'}>
           {selectedItem ? <IngredientDetails item={selectedItem} /> : null}
         </Modal>
       ) : null}

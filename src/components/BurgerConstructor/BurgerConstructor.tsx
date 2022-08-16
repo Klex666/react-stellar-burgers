@@ -14,10 +14,6 @@ import { useState } from 'react';
 const BurgerConstructor: React.FC<IBurgerIngredients> = ({ data }) => {
   const [isOpened, setIsOpened] = useState(false);
 
-  const closePopup = () => {
-    setIsOpened(false);
-  };
-
   return (
     <section className={styles.burgerConstructor}>
       <div className="ml-8">
@@ -71,7 +67,7 @@ const BurgerConstructor: React.FC<IBurgerIngredients> = ({ data }) => {
         </div>
       </div>
       {isOpened ? (
-        <Modal closePopup={closePopup} isOpened={isOpened} title={''}>
+        <Modal setIsOpened={setIsOpened} isOpened={isOpened} title={''}>
           <OrderDetails />
         </Modal>
       ) : null}
