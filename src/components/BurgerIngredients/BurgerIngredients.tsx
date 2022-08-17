@@ -1,12 +1,21 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState } from 'react';
+import { IBurgerIngredients, IIngredient } from '../../utils/types';
 import IngredientsCard from '../IngredientsCard/IngredientsCard';
-import data from '../../utils/data';
+import Modal from '../Modal/Modal';
 
 import styles from './BurgerIngredients.module.css';
+import IngredientDetails from './IngredientDetails/IngredientDetails';
 
-const BurgerIngredients = () => {
+const BurgerIngredients: React.FC<IBurgerIngredients> = ({ data }) => {
   const [current, setCurrent] = useState('Булки');
+  const [isOpened, setIsOpened] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<IIngredient>();
+
+  const onOpen = (obj: IIngredient) => {
+    setIsOpened(true);
+    setSelectedItem(obj);
+  };
 
   return (
     <section className="mt-10">
@@ -29,7 +38,7 @@ const BurgerIngredients = () => {
             {data.map((obj) => {
               if (obj.type === 'bun') {
                 return (
-                  <IngredientsCard key={obj._id} image={obj.image} name={obj.name} cost={20} />
+                  <IngredientsCard cost={20} key={obj._id} {...obj} onOpen={() => onOpen(obj)} />
                 );
               }
               return null;
@@ -40,7 +49,7 @@ const BurgerIngredients = () => {
             {data.map((obj) => {
               if (obj.type === 'sauce') {
                 return (
-                  <IngredientsCard key={obj._id} image={obj.image} name={obj.name} cost={30} />
+                  <IngredientsCard key={obj._id} {...obj} cost={30} onOpen={() => onOpen(obj)} />
                 );
               }
               return null;
@@ -51,7 +60,7 @@ const BurgerIngredients = () => {
             {data.map((obj) => {
               if (obj.type === 'main') {
                 return (
-                  <IngredientsCard key={obj._id} image={obj.image} name={obj.name} cost={40} />
+                  <IngredientsCard key={obj._id} {...obj} cost={40} onOpen={() => onOpen(obj)} />
                 );
               }
               return null;
@@ -59,6 +68,11 @@ const BurgerIngredients = () => {
           </div>
         </div>
       </div>
+      {isOpened ? (
+        <Modal isOpened={isOpened} setIsOpened={setIsOpened} title={'Детали ингредиента'}>
+          {selectedItem ? <IngredientDetails item={selectedItem} /> : null}
+        </Modal>
+      ) : null}
     </section>
   );
 };
