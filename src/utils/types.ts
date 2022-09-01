@@ -18,14 +18,10 @@ export interface IIngredient {
   __v: number;
 }
 
-export interface IBurgerIngredients {
-  data: IIngredient[];
-}
-
 export interface IModal {
-  setIsOpened: Function;
-  isOpened: boolean;
   title: string;
+  isOpened: boolean;
+  closeModal: () => void;
 }
 
 export interface IModalOverlay {
@@ -33,5 +29,5 @@ export interface IModalOverlay {
 }
 
 export interface IIngredientDetails {
-  item: IIngredient;
+  item: any;
 }

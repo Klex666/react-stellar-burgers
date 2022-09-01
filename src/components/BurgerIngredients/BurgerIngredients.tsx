@@ -1,66 +1,111 @@
-import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useState } from 'react';
-import { IBurgerIngredients, IIngredient } from '../../utils/types';
-import IngredientsCard from '../IngredientsCard/IngredientsCard';
-import Modal from '../Modal/Modal';
+import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useRef } from "react";
+import { IIngredient } from "../../utils/types";
+import IngredientsCard from "../IngredientsCard/IngredientsCard";
+import Modal from "../Modal/Modal";
 
-import styles from './BurgerIngredients.module.css';
-import IngredientDetails from './IngredientDetails/IngredientDetails';
+import styles from "./BurgerIngredients.module.css";
+import IngredientDetails from "./IngredientDetails/IngredientDetails";
 
-const BurgerIngredients: React.FC<IBurgerIngredients> = ({ data }) => {
-  const [current, setCurrent] = useState('Булки');
-  const [isOpened, setIsOpened] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<IIngredient>();
+import { useGetIngredientsQuery } from "../../services/redux/api/ingredientsApi";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
+import { useActions } from "../../hooks/useActions";
 
-  const onOpen = (obj: IIngredient) => {
-    setIsOpened(true);
-    setSelectedItem(obj);
+const BurgerIngredients = () => {
+  const { current } = useTypedSelector((store) => store.ingredientsSlice);
+  const { isOpened, selectedItem } = useTypedSelector(
+    (store) => store.ingredientsModalSlice
+  );
+  const refBun = useRef<any>(null);
+  const refSauce = useRef<any>(null);
+  const refIngredient = useRef<any>(null);
+
+  const { openModal, closeModal, setCurrent } = useActions();
+
+  const { data, isLoading, isError } = useGetIngredientsQuery(null);
+
+  const handleClick = (value: string, ref: any) => {
+    setCurrent(value);
+    ref.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
     <section className="mt-10">
       <p className="text text_type_main-large">Соберите бургер</p>
       <div className={styles.tabs}>
-        <Tab value="Булки" active={current === 'Булки'} onClick={setCurrent}>
+        <Tab
+          value="Булки"
+          active={current === "Булки"}
+          onClick={() => handleClick("Булки", refBun.current)}
+        >
           Булки
         </Tab>
-        <Tab value="Соусы" active={current === 'Соусы'} onClick={setCurrent}>
+        <Tab
+          value="Соусы"
+          active={current === "Соусы"}
+          onClick={() => handleClick("Соусы", refSauce.current)}
+        >
           Соусы
         </Tab>
-        <Tab value="Начинки" active={current === 'Начинки'} onClick={setCurrent}>
+        <Tab
+          value="Начинки"
+          active={current === "Начинки"}
+          onClick={() => handleClick("Начинки", refIngredient.current)}
+        >
           Начинки
         </Tab>
       </div>
       <div className="mt-10">
         <div className={styles.ingredientsSection}>
-          <p className="text text_type_main-medium">Булки</p>
+          <p className="text text_type_main-medium" ref={refBun}>
+            Булки
+          </p>
           <div className={styles.cardSection}>
-            {data.map((obj) => {
-              if (obj.type === 'bun') {
+            {data?.data.map((obj: IIngredient) => {
+              if (obj.type === "bun") {
                 return (
-                  <IngredientsCard cost={20} key={obj._id} {...obj} onOpen={() => onOpen(obj)} />
+                  <IngredientsCard
+                    cost={obj.price}
+                    key={obj._id}
+                    {...obj}
+                    onOpen={() => openModal(obj)}
+                  />
                 );
               }
               return null;
             })}
           </div>
-          <p className="text text_type_main-medium mt-10">Соусы</p>
+          <p className="text text_type_main-medium mt-10" ref={refSauce}>
+            Соусы
+          </p>
           <div className={styles.cardSection}>
-            {data.map((obj) => {
-              if (obj.type === 'sauce') {
+            {data?.data.map((obj: IIngredient) => {
+              if (obj.type === "sauce") {
                 return (
-                  <IngredientsCard key={obj._id} {...obj} cost={30} onOpen={() => onOpen(obj)} />
+                  <IngredientsCard
+                    key={obj._id}
+                    {...obj}
+                    cost={obj.price}
+                    onOpen={() => openModal(obj)}
+                  />
                 );
               }
               return null;
             })}
           </div>
-          <p className="text text_type_main-medium mt-10">Начинки</p>
+          <p className="text text_type_main-medium mt-10" ref={refIngredient}>
+            Начинки
+          </p>
           <div className={styles.cardSection}>
-            {data.map((obj) => {
-              if (obj.type === 'main') {
+            {data?.data.map((obj: IIngredient) => {
+              if (obj.type === "main") {
                 return (
-                  <IngredientsCard key={obj._id} {...obj} cost={40} onOpen={() => onOpen(obj)} />
+                  <IngredientsCard
+                    key={obj._id}
+                    {...obj}
+                    cost={obj.price}
+                    onOpen={() => openModal(obj)}
+                  />
                 );
               }
               return null;
@@ -69,7 +114,11 @@ const BurgerIngredients: React.FC<IBurgerIngredients> = ({ data }) => {
         </div>
       </div>
       {isOpened ? (
-        <Modal isOpened={isOpened} setIsOpened={setIsOpened} title={'Детали ингредиента'}>
+        <Modal
+          title={"Детали ингредиента"}
+          isOpened={isOpened}
+          closeModal={closeModal}
+        >
           {selectedItem ? <IngredientDetails item={selectedItem} /> : null}
         </Modal>
       ) : null}
