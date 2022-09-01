@@ -39,6 +39,13 @@ const initialState: IConstructorSlice = {
       type: "bun",
       price: 988,
       index: 1,
+      proteins: 0,
+      fat: 0,
+      carbohydrates: 0,
+      calories: 0,
+      image_mobile: "",
+      image_large: "",
+      __v: 0,
     },
     {
       _id: "60d3b41abdacab0026a733c7",
@@ -47,11 +54,17 @@ const initialState: IConstructorSlice = {
       image: "https://code.s3.yandex.net/react/code/bun-01.png",
       type: "bun",
       price: 988,
-      index: 2,
+      index: 1,
+      proteins: 0,
+      fat: 0,
+      carbohydrates: 0,
+      calories: 0,
+      image_mobile: "",
+      image_large: "",
+      __v: 0,
     },
   ],
   totalPrice: 1976,
-  currentElement: [],
 
   status: "",
   orderCode: 0,
@@ -83,18 +96,8 @@ export const constructorSlice = createSlice({
         return obj.price + sum;
       }, 0);
     },
-    setCurrentElement(state, action) {
-      state.currentElement = action.payload;
-    },
-    replaceItems(state, action) {
-      state.items.splice(
-        state.currentElement[0].index,
-        0,
-        action.payload.index
-      );
-    },
-    deleteCurrentElement(state) {
-      state.currentElement = [];
+    updateItems(state, action) {
+      state.items = action.payload;
     },
     setOrderCode(state, action) {
       state.orderCode = action.payload;
@@ -119,6 +122,13 @@ export const constructorSlice = createSlice({
           type: "bun",
           price: 988,
           index: 1,
+          proteins: 0,
+          fat: 0,
+          carbohydrates: 0,
+          calories: 0,
+          image_mobile: "",
+          image_large: "",
+          __v: 0,
         },
         {
           _id: "60d3b41abdacab0026a733c7",
@@ -127,7 +137,14 @@ export const constructorSlice = createSlice({
           image: "https://code.s3.yandex.net/react/code/bun-01.png",
           type: "bun",
           price: 988,
-          index: 2,
+          index: 1,
+          proteins: 0,
+          fat: 0,
+          carbohydrates: 0,
+          calories: 0,
+          image_mobile: "",
+          image_large: "",
+          __v: 0,
         },
       ];
       state.totalPrice = 1976;

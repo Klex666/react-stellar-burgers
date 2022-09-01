@@ -2,7 +2,6 @@ import {
   Button,
   ConstructorElement,
   CurrencyIcon,
-  DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import styles from "./BurgerConstructor.module.css";
@@ -12,7 +11,8 @@ import { useTypedSelector } from "../../hooks/useTypedSelector";
 import { useActions } from "../../hooks/useActions";
 import { useDrop } from "react-dnd";
 import { IConstructorIngredients } from "../../utils/reducersTypes";
-import { getOrderCode } from "../../services/redux/slices/ConstructorSlice";
+import { useCallback } from "react";
+import ConstructorElementContainer from "./ConstructorElementContainer/ConstructorElementContainer";
 
 const BurgerConstructor = () => {
   const { isOpened } = useTypedSelector((store) => store.constructorModalSlice);
@@ -20,11 +20,8 @@ const BurgerConstructor = () => {
     openConstructorModal,
     closeConstructorModal,
     addItems,
-    deleteItem,
     replaceBun,
-    setCurrentElement,
-    deleteCurrentElement,
-    replaceItems,
+    updateItems,
   } = useActions();
   const { items, totalPrice } = useTypedSelector(
     (store) => store.constructorSlice
@@ -43,6 +40,19 @@ const BurgerConstructor = () => {
       }
     },
   });
+
+  const moveCard = useCallback(
+    (dragIndex, hoverIndex) => {
+      const dragIngredient = items[dragIndex];
+      const newIngredients = [...items];
+
+      newIngredients.splice(dragIndex, 1);
+      newIngredients.splice(hoverIndex, 0, dragIngredient);
+
+      updateItems(newIngredients);
+    },
+    [items]
+  );
 
   return (
     <section className={styles.burgerConstructor}>
@@ -67,26 +77,12 @@ const BurgerConstructor = () => {
         {items.map((obj: IConstructorIngredients, id: number) => {
           if (obj.type !== "bun") {
             return (
-              <div
-                draggable={true}
-                key={id}
-                onDragStart={() => setCurrentElement(obj)}
-                onDragEnd={() => deleteCurrentElement()}
-                onDrag={() => replaceItems(obj)}
-              >
-                <div className={styles.card} key={id}>
-                  <div className="mr-2 mt-8">
-                    <DragIcon type="primary" />
-                  </div>
-                  <ConstructorElement
-                    type={undefined}
-                    isLocked={false}
-                    text={obj.name}
-                    thumbnail={obj.image}
-                    price={obj.price}
-                    handleClose={() => deleteItem(obj)}
-                  />
-                </div>
+              <div className={styles.card} key={id}>
+                <ConstructorElementContainer
+                  item={obj}
+                  index={id}
+                  moveCard={moveCard}
+                />
               </div>
             );
           }

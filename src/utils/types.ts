@@ -31,3 +31,9 @@ export interface IModalOverlay {
 export interface IIngredientDetails {
   item: any;
 }
+
+export interface IConstructorElementContainer {
+  item: IIngredient;
+  index: number;
+  moveCard: (dragIndex: number, hoverIndex: number) => void;
+}
