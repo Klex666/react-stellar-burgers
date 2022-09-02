@@ -35,7 +35,7 @@ const ConstructorElementContainer: React.FC<IConstructorElementContainer> = ({
       if (!ref.current) {
         return;
       }
-      const dragIndex = item.uuid;
+      const dragIndex = item.index;
       const hoverIndex = index;
 
       if (dragIndex === hoverIndex) {
@@ -58,7 +58,7 @@ const ConstructorElementContainer: React.FC<IConstructorElementContainer> = ({
       }
       moveCard(dragIndex, hoverIndex);
 
-      item.uuid = hoverIndex;
+      item.index = hoverIndex;
     },
   });
 

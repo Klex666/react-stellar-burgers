@@ -8,5 +8,5 @@ export interface IConstructorSlice {
 }
 
 export interface IConstructorIngredients extends IIngredient {
-  uuid: number;
+  index: number;
 }
