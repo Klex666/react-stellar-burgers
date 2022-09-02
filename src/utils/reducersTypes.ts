@@ -7,19 +7,6 @@ export interface IConstructorSlice {
   status: string;
 }
 
-export interface IConstructorIngredients {
-  _id: string;
-  name: string;
-  cost: number;
-  image: string;
-  type: string;
-  price: number;
-  index: number;
-  proteins: number;
-  fat: number;
-  carbohydrates: number;
-  calories: number;
-  image_mobile: string;
-  image_large: string;
-  __v: number;
+export interface IConstructorIngredients extends IIngredient {
+  uuid: number;
 }

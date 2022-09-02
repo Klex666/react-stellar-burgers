@@ -1,14 +1,15 @@
 import { AsyncThunk, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { IConstructorSlice } from "../../../utils/reducersTypes";
 import { v4 as uuid } from "uuid";
-import { orderUrl } from "../../../utils/constants";
 import { IIngredient } from "../../../utils/types";
+import { apiUrl } from "../../../utils/constants";
+import { checkResponse } from "../../../utils/checkResponse";
 
 export const getOrderCode: AsyncThunk<any, any, any> = createAsyncThunk(
   "constructor/setOrderCode",
   async function (_: void, { rejectWithValue, getState }: any) {
     try {
-      const response = await fetch(orderUrl, {
+      const response = await fetch(apiUrl + "/orders", {
         method: "POST",
         headers: {
           "Content-Type": "application/json;charset=utf-8",
@@ -19,10 +20,7 @@ export const getOrderCode: AsyncThunk<any, any, any> = createAsyncThunk(
           ),
         }),
       });
-      if (!response.ok) {
-        throw new Error("Error");
-      }
-      return await response.json();
+      return await checkResponse(response);
     } catch (error: any) {
       return rejectWithValue(error.message);
     }
@@ -30,41 +28,8 @@ export const getOrderCode: AsyncThunk<any, any, any> = createAsyncThunk(
 );
 
 const initialState: IConstructorSlice = {
-  items: [
-    {
-      _id: "60d3b41abdacab0026a733c7",
-      name: "Флюоресцентная булка R2-D3",
-      cost: 988,
-      image: "https://code.s3.yandex.net/react/code/bun-01.png",
-      type: "bun",
-      price: 988,
-      index: 1,
-      proteins: 0,
-      fat: 0,
-      carbohydrates: 0,
-      calories: 0,
-      image_mobile: "",
-      image_large: "",
-      __v: 0,
-    },
-    {
-      _id: "60d3b41abdacab0026a733c7",
-      name: "Флюоресцентная булка R2-D3",
-      cost: 988,
-      image: "https://code.s3.yandex.net/react/code/bun-01.png",
-      type: "bun",
-      price: 988,
-      index: 1,
-      proteins: 0,
-      fat: 0,
-      carbohydrates: 0,
-      calories: 0,
-      image_mobile: "",
-      image_large: "",
-      __v: 0,
-    },
-  ],
-  totalPrice: 1976,
+  items: [],
+  totalPrice: 0,
 
   status: "",
   orderCode: 0,
@@ -85,7 +50,7 @@ export const constructorSlice = createSlice({
     },
     deleteItem(state, action) {
       state.items = state.items.filter(
-        (obj) => obj.index !== action.payload.index
+        (obj) => obj.uuid !== action.payload.index
       );
       state.totalPrice = state.totalPrice - action.payload.price;
     },
@@ -113,41 +78,8 @@ export const constructorSlice = createSlice({
     [getOrderCode.fulfilled.type]: (state, action) => {
       state.status = "success";
       state.orderCode = action.payload.order.number;
-      state.items = [
-        {
-          _id: "60d3b41abdacab0026a733c7",
-          name: "Флюоресцентная булка R2-D3",
-          cost: 988,
-          image: "https://code.s3.yandex.net/react/code/bun-01.png",
-          type: "bun",
-          price: 988,
-          index: 1,
-          proteins: 0,
-          fat: 0,
-          carbohydrates: 0,
-          calories: 0,
-          image_mobile: "",
-          image_large: "",
-          __v: 0,
-        },
-        {
-          _id: "60d3b41abdacab0026a733c7",
-          name: "Флюоресцентная булка R2-D3",
-          cost: 988,
-          image: "https://code.s3.yandex.net/react/code/bun-01.png",
-          type: "bun",
-          price: 988,
-          index: 1,
-          proteins: 0,
-          fat: 0,
-          carbohydrates: 0,
-          calories: 0,
-          image_mobile: "",
-          image_large: "",
-          __v: 0,
-        },
-      ];
-      state.totalPrice = 1976;
+      state.items = [];
+      state.totalPrice = 0;
     },
   },
 });

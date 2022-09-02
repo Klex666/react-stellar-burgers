@@ -13,6 +13,7 @@ import { useDrop } from "react-dnd";
 import { IConstructorIngredients } from "../../utils/reducersTypes";
 import { useCallback } from "react";
 import ConstructorElementContainer from "./ConstructorElementContainer/ConstructorElementContainer";
+import EmptyConstructor from "./EmptyConstructor/EmptyConstructor";
 
 const BurgerConstructor = () => {
   const { isOpened } = useTypedSelector((store) => store.constructorModalSlice);
@@ -64,7 +65,7 @@ const BurgerConstructor = () => {
                 key={obj._id}
                 type={"top"}
                 isLocked={true}
-                text={obj.name}
+                text={obj.name + "(верх)"}
                 thumbnail={obj.image}
                 price={obj.price}
               />
@@ -74,20 +75,24 @@ const BurgerConstructor = () => {
         })}
       </div>
       <div className={styles.cardSection} ref={dropTarget}>
-        {items.map((obj: IConstructorIngredients, id: number) => {
-          if (obj.type !== "bun") {
-            return (
-              <div className={styles.card} key={id}>
-                <ConstructorElementContainer
-                  item={obj}
-                  index={id}
-                  moveCard={moveCard}
-                />
-              </div>
-            );
-          }
-          return null;
-        })}
+        {items.length === 0 ? (
+          <EmptyConstructor />
+        ) : (
+          items.map((obj: IConstructorIngredients, id: number) => {
+            if (obj.type !== "bun") {
+              return (
+                <div className={styles.card} key={obj.uuid}>
+                  <ConstructorElementContainer
+                    item={obj}
+                    index={id}
+                    moveCard={moveCard}
+                  />
+                </div>
+              );
+            }
+            return null;
+          })
+        )}
       </div>
       <div className="ml-8 mt-4">
         {items.map((obj: IConstructorIngredients, index: number) => {
@@ -97,7 +102,7 @@ const BurgerConstructor = () => {
                 key={obj._id}
                 type={"bottom"}
                 isLocked={true}
-                text={obj.name}
+                text={obj.name + "(низ)"}
                 thumbnail={obj.image}
                 price={obj.price}
               />
@@ -112,7 +117,7 @@ const BurgerConstructor = () => {
           <CurrencyIcon type="primary" />
         </div>
         <div className="ml-10">
-          {items.length === 2 ? (
+          {items.length <= 2 ? (
             <Button type="primary" size="medium">
               Оформить заказ
             </Button>

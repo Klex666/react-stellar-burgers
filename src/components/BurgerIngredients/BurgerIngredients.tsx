@@ -1,5 +1,5 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { IIngredient } from "../../utils/types";
 import IngredientsCard from "../IngredientsCard/IngredientsCard";
 import Modal from "../Modal/Modal";
@@ -7,12 +7,15 @@ import Modal from "../Modal/Modal";
 import styles from "./BurgerIngredients.module.css";
 import IngredientDetails from "./IngredientDetails/IngredientDetails";
 
-import { useGetIngredientsQuery } from "../../services/redux/api/ingredientsApi";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 import { useActions } from "../../hooks/useActions";
+import { getIngredients } from "../../services/redux/slices/ingredientsSlice";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../services/redux/store";
 
 const BurgerIngredients = () => {
-  const { current } = useTypedSelector((store) => store.ingredientsSlice);
+  const dispatch = useDispatch<AppDispatch>();
+  const { current, data } = useTypedSelector((store) => store.ingredientsSlice);
   const { isOpened, selectedItem } = useTypedSelector(
     (store) => store.ingredientsModalSlice
   );
@@ -22,12 +25,14 @@ const BurgerIngredients = () => {
 
   const { openModal, closeModal, setCurrent } = useActions();
 
-  const { data, isLoading, isError } = useGetIngredientsQuery(null);
-
   const handleClick = (value: string, ref: any) => {
     setCurrent(value);
     ref.scrollIntoView({ behavior: "smooth" });
   };
+
+  useEffect(() => {
+    dispatch(getIngredients(null));
+  }, [dispatch]);
 
   return (
     <section className="mt-10">
@@ -61,7 +66,7 @@ const BurgerIngredients = () => {
             Булки
           </p>
           <div className={styles.cardSection}>
-            {data?.data.map((obj: IIngredient) => {
+            {data?.map((obj: IIngredient) => {
               if (obj.type === "bun") {
                 return (
                   <IngredientsCard
@@ -79,7 +84,7 @@ const BurgerIngredients = () => {
             Соусы
           </p>
           <div className={styles.cardSection}>
-            {data?.data.map((obj: IIngredient) => {
+            {data?.map((obj: IIngredient) => {
               if (obj.type === "sauce") {
                 return (
                   <IngredientsCard
@@ -97,7 +102,7 @@ const BurgerIngredients = () => {
             Начинки
           </p>
           <div className={styles.cardSection}>
-            {data?.data.map((obj: IIngredient) => {
+            {data?.map((obj: IIngredient) => {
               if (obj.type === "main") {
                 return (
                   <IngredientsCard
