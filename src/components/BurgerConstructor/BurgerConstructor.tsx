@@ -81,7 +81,7 @@ const BurgerConstructor = () => {
           items.map((obj: IConstructorIngredients, id: number) => {
             if (obj.type !== "bun") {
               return (
-                <div className={styles.card} key={obj.uuid}>
+                <div className={styles.card} key={obj.index}>
                   <ConstructorElementContainer
                     item={obj}
                     index={id}

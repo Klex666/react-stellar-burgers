@@ -50,7 +50,11 @@ export const constructorSlice = createSlice({
     },
     deleteItem(state, action) {
       state.items = state.items.filter(
+<<<<<<< HEAD
         (obj) => obj.uuid !== action.payload.uuid
+=======
+        (obj) => obj.index !== action.payload.index
+>>>>>>> 4d3cc2369d741dcc35c9f7d683ecc44d05a7c2e2
       );
       state.totalPrice = state.totalPrice - action.payload.price;
     },
