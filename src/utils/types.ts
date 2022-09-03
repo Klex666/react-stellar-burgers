@@ -39,5 +39,5 @@ export interface IConstructorElementContainer {
 }
 
 export interface IConstructorIngredients extends IIngredient {
-  uuid: number;
+  index: number;
 }
