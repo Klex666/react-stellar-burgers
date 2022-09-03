@@ -4,9 +4,11 @@ import {
   ConstructorElement,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { IConstructorElementContainer } from "../../../utils/types";
+import {
+  IConstructorElementContainer,
+  IConstructorIngredients,
+} from "../../../utils/types";
 import { useDrag, useDrop, XYCoord } from "react-dnd";
-import { IConstructorIngredients } from "../../../utils/reducersTypes";
 import { useActions } from "../../../hooks/useActions";
 
 import styles from "./ConstructorElementContainer.module.css";

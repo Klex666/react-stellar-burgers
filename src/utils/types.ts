@@ -37,3 +37,7 @@ export interface IConstructorElementContainer {
   index: number;
   moveCard: (dragIndex: number, hoverIndex: number) => void;
 }
+
+export interface IConstructorIngredients extends IIngredient {
+  uuid: number;
+}

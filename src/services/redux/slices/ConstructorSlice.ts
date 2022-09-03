@@ -42,7 +42,7 @@ export const constructorSlice = createSlice({
     addItems(state, action) {
       state.items.push({
         ...action.payload,
-        index: uuid(),
+        uuid: uuid(),
       });
       state.totalPrice = state.items.reduce((sum, obj) => {
         return obj.price + sum;
@@ -50,13 +50,13 @@ export const constructorSlice = createSlice({
     },
     deleteItem(state, action) {
       state.items = state.items.filter(
-        (obj) => obj.uuid !== action.payload.index
+        (obj) => obj.uuid !== action.payload.uuid
       );
       state.totalPrice = state.totalPrice - action.payload.price;
     },
     replaceBun(state, action) {
-      state.items[0] = action.payload;
-      state.items[1] = action.payload;
+      state.items[0] = { ...action.payload, uuid: uuid() };
+      state.items[1] = { ...action.payload, uuid: uuid() };
       state.totalPrice = state.items.reduce((sum, obj) => {
         return obj.price + sum;
       }, 0);

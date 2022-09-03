@@ -10,10 +10,10 @@ import Modal from "../Modal/Modal";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 import { useActions } from "../../hooks/useActions";
 import { useDrop } from "react-dnd";
-import { IConstructorIngredients } from "../../utils/reducersTypes";
 import { useCallback } from "react";
 import ConstructorElementContainer from "./ConstructorElementContainer/ConstructorElementContainer";
 import EmptyConstructor from "./EmptyConstructor/EmptyConstructor";
+import { IConstructorIngredients, IIngredient } from "../../utils/types";
 
 const BurgerConstructor = () => {
   const { isOpened } = useTypedSelector((store) => store.constructorModalSlice);
@@ -58,7 +58,7 @@ const BurgerConstructor = () => {
   return (
     <section className={styles.burgerConstructor}>
       <div className="ml-9">
-        {items.map((obj: IConstructorIngredients, index: number) => {
+        {items.map((obj: IIngredient, index: number) => {
           if (obj.type === "bun" && index === 0) {
             return (
               <ConstructorElement
@@ -95,7 +95,7 @@ const BurgerConstructor = () => {
         )}
       </div>
       <div className="ml-8 mt-4">
-        {items.map((obj: IConstructorIngredients, index: number) => {
+        {items.map((obj: IIngredient, index: number) => {
           if (obj.type === "bun" && index === 1) {
             return (
               <ConstructorElement

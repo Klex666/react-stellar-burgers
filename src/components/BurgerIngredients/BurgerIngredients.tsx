@@ -1,5 +1,5 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { IIngredient } from "../../utils/types";
 import IngredientsCard from "../IngredientsCard/IngredientsCard";
 import Modal from "../Modal/Modal";
@@ -12,6 +12,7 @@ import { useActions } from "../../hooks/useActions";
 import { getIngredients } from "../../services/redux/slices/ingredientsSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../services/redux/store";
+import { useInView } from "react-intersection-observer";
 
 const BurgerIngredients = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -19,9 +20,11 @@ const BurgerIngredients = () => {
   const { isOpened, selectedItem } = useTypedSelector(
     (store) => store.ingredientsModalSlice
   );
-  const refBun = useRef<any>(null);
-  const refSauce = useRef<any>(null);
-  const refIngredient = useRef<any>(null);
+  const [refBun, inViewBuns, entryBuns] = useInView({ threshold: 0 });
+  const [refSauce, inViewSauce, entrySauce] = useInView({ threshold: 0 });
+  const [refIngredient, inViewIngredient, entryIngredient] = useInView({
+    threshold: 0,
+  });
 
   const { openModal, closeModal, setCurrent } = useActions();
 
@@ -34,6 +37,16 @@ const BurgerIngredients = () => {
     dispatch(getIngredients(null));
   }, [dispatch]);
 
+  useEffect(() => {
+    if (inViewBuns) {
+      setCurrent("Булки");
+    } else if (inViewSauce) {
+      setCurrent("Соусы");
+    } else if (inViewIngredient) {
+      setCurrent("Начинки");
+    }
+  }, [inViewIngredient, inViewSauce, inViewBuns]);
+
   return (
     <section className="mt-10">
       <p className="text text_type_main-large">Соберите бургер</p>
@@ -41,21 +54,21 @@ const BurgerIngredients = () => {
         <Tab
           value="Булки"
           active={current === "Булки"}
-          onClick={() => handleClick("Булки", refBun.current)}
+          onClick={() => handleClick("Булки", entryBuns?.target)}
         >
           Булки
         </Tab>
         <Tab
           value="Соусы"
           active={current === "Соусы"}
-          onClick={() => handleClick("Соусы", refSauce.current)}
+          onClick={() => handleClick("Соусы", entrySauce?.target)}
         >
           Соусы
         </Tab>
         <Tab
           value="Начинки"
           active={current === "Начинки"}
-          onClick={() => handleClick("Начинки", refIngredient.current)}
+          onClick={() => handleClick("Начинки", entryIngredient?.target)}
         >
           Начинки
         </Tab>
