@@ -18,14 +18,10 @@ export interface IIngredient {
   __v: number;
 }
 
-export interface IBurgerIngredients {
-  data: IIngredient[];
-}
-
 export interface IModal {
-  setIsOpened: Function;
-  isOpened: boolean;
   title: string;
+  isOpened: boolean;
+  closeModal: () => void;
 }
 
 export interface IModalOverlay {
@@ -33,5 +29,15 @@ export interface IModalOverlay {
 }
 
 export interface IIngredientDetails {
+  item: any;
+}
+
+export interface IConstructorElementContainer {
   item: IIngredient;
+  index: number;
+  moveCard: (dragIndex: number, hoverIndex: number) => void;
+}
+
+export interface IConstructorIngredients extends IIngredient {
+  index: number;
 }
